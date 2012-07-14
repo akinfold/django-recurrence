@@ -7,6 +7,7 @@ from recurrence import models, forms
 try:
     from south.modelsinspector import add_introspection_rules
     add_introspection_rules([], ["^recurrence\.fields\.RecurrenceField"])
+    add_introspection_rules([], ["^recurrence\.fields\.RecurrenceModelField"])
 except ImportError:
     pass
 
@@ -106,7 +107,7 @@ class RecurrenceModelField(related.OneToOneField):
     def formfield(self, **kwargs):
         defaults = {'form_class': forms.RecurrenceField}
         defaults.update(kwargs)
-        return super(RecurrenceField, self).formfield(**defaults)
+        return super(related.ForeignKey, self).formfield(**defaults)
 
 
 class RecurrenceModelDescriptor(related.ReverseSingleRelatedObjectDescriptor):
