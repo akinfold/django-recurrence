@@ -947,8 +947,7 @@ def deserialize(text):
         dt = dt.astimezone(localtz)
 
         # set tz to settings.TIME_ZONE and return offset-naive datetime
-        return datetime.datetime(
-            dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+        return dt
 
     dtstart, dtend, rrules, exrules, rdates, exdates = None, None, [], [], [], []
 
