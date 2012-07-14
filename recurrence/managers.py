@@ -76,9 +76,15 @@ class RecurrenceManager(manager.Manager):
 
         dtstart = dtend = None
         if recurrence_model.dtstart:
-            dtstart = pytz.utc.localize(recurrence_model.dtstart)
+            if not recurrence_model.dtstart.tzinfo:
+                dtstart = pytz.utc.localize(recurrence_model.dtstart)
+            else:
+                dtstart = recurrence_model.dtstart
         if recurrence_model.dtend:
-            dtend = pytz.utc.localize(recurrence_model.dtend)
+            if not recurrence_model.dtend.tzinfo:
+                dtend = pytz.utc.localize(recurrence_model.dtend)
+            else:
+                dtend = recurrence_model.dtend
 
         return recurrence.Recurrence(
             dtstart, dtend, rrules, exrules, rdates, exdates)
@@ -91,7 +97,7 @@ class RecurrenceManager(manager.Manager):
             if not dt:
                 return dt
             if dt.tzinfo:
-                return dt.tzinfo.astimezone(pytz.utc)
+                return dt
             else:
                 return pytz.utc.localize(dt)
 
